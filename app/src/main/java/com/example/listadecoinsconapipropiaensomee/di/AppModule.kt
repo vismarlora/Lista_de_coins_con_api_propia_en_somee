@@ -1,5 +1,7 @@
 package com.example.listadecoinsconapipropiaensomee.di
 
+import com.example.listadecoinsconapipropiaensomee.CoinApi
+import com.example.listadecoinsconapipropiaensomee.CoinsRepository
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import dagger.Module
@@ -18,5 +20,14 @@ object AppModule {
         return Moshi.Builder()
             .add(KotlinJsonAdapterFactory())
             .build()
+    }
+
+
+
+
+    @Provides
+    @Singleton
+    fun provideCoinRepository(coinApi: CoinApi): CoinsRepository {
+        return CoinsRepository(coinApi)
     }
 }

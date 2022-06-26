@@ -11,14 +11,27 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.State
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.example.listadecoinsconapipropiaensomee.ui.theme.ListaDeCoinsConApiPropiaEnSomeeTheme
+import com.example.listadecoinsconapipropiaensomee.util.Resource
 import dagger.hilt.android.AndroidEntryPoint
+import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
+import retrofit2.HttpException
 import retrofit2.http.GET
 import retrofit2.http.Path
+import java.io.IOException
+import javax.inject.Inject
 
 @AndroidEntryPoint
 
@@ -97,3 +110,54 @@ interface CoinApi {
     suspend fun getCoin(@Path("coinId") coinId: String): CoinDto
 }
 
+class CoinsRepository @Inject constructor(
+    private val api: CoinApi
+) {
+    fun getCoins(): Flow<Resource<List<CoinDto>>> = flow {
+        try {
+            emit(Resource.Loading()) //indicar que estamos cargando
+
+            val coins = api.getCoins() //descarga las monedas de internet, se supone quedemora algo
+
+            emit(Resource.Success(coins)) //indicar que se cargo correctamente y pasarle las monedas
+        } catch (e: HttpException) {
+            //error general HTTP
+            emit(Resource.Error(e.message ?: "Error HTTP GENERAL"))
+        } catch (e: IOException) {
+            //debe verificar tu conexion a internet
+            emit(Resource.Error(e.message ?: "verificar tu conexion a internet"))
+        }
+    }
+}
+
+data class CoinListState(
+    val isLoading: Boolean = false,
+    val coins: List<CoinDto> = emptyList(),
+    val error: String = ""
+)
+
+@HiltViewModel
+class CoinViewModel @Inject constructor(
+    private val coinsRepository: CoinsRepository
+) : ViewModel() {
+
+    private var _state = mutableStateOf(CoinListState())
+    val state: State<CoinListState> = _state
+
+    init {
+        coinsRepository.getCoins().onEach { result ->
+            when (result) {
+                is Resource.Loading -> {
+                    _state.value = CoinListState(isLoading = true)
+                }
+
+                is Resource.Success -> {
+                    _state.value = CoinListState(coins = result.data ?: emptyList())
+                }
+                is Resource.Error -> {
+                    _state.value = CoinListState(error = result.message ?: "Error desconocido")
+                }
+            }
+        }.launchIn(viewModelScope)
+    }
+}
