@@ -8,6 +8,8 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import retrofit2.Retrofit
+import retrofit2.converter.moshi.MoshiConverterFactory
 import javax.inject.Singleton
 
 @Module
@@ -22,8 +24,15 @@ object AppModule {
             .build()
     }
 
-
-
+    @Provides
+    @Singleton
+    fun provideCoinApi(moshi: Moshi): CoinApi {
+        return Retrofit.Builder()
+            .baseUrl("http://vismarl.somee.com")
+            .addConverterFactory(MoshiConverterFactory.create(moshi))
+            .build()
+            .create(CoinApi::class.java)
+    }
 
     @Provides
     @Singleton

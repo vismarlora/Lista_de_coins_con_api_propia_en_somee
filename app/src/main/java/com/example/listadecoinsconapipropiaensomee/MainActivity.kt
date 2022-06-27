@@ -6,10 +6,8 @@ import androidx.activity.compose.setContent
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.material.CircularProgressIndicator
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Surface
-import androidx.compose.material.Text
+import androidx.compose.foundation.lazy.items
+import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
@@ -34,7 +32,6 @@ import java.io.IOException
 import javax.inject.Inject
 
 @AndroidEntryPoint
-
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -56,21 +53,25 @@ class MainActivity : ComponentActivity() {
 fun CoinListScreen(
     viewModel: CoinViewModel = hiltViewModel()
 ) {
-
     val state = viewModel.state.value
 
-    Column(modifier = Modifier.fillMaxSize()) {
-        LazyColumn(modifier = Modifier.fillMaxSize()){
-            items( state.coins){ coin ->
-                CoinItem(coin = coin, {})
-            }
+    Scaffold(
+        topBar = {
+            TopAppBar(title = { Text(text = "Consulta de problemas")})
         }
+    ) {
+        Column(modifier = Modifier.padding(it).fillMaxWidth()) {
+            LazyColumn(modifier = Modifier.fillMaxWidth()){
+                items(state.coins){ coin ->
+                    CoinItem(coin = coin, {})
+                }
+            }
 
-        if (state.isLoading)
-            CircularProgressIndicator()
+            if (state.isLoading)
+                CircularProgressIndicator()
 
+        }
     }
-
 }
 
 @Composable
@@ -81,13 +82,29 @@ fun CoinItem(
     Row(modifier = Modifier
         .fillMaxWidth()
         .clickable { onClick(coin) }
-        .padding(16.dp)
+        .padding(20.dp)
     ) {
+
         Text(
-            text = "${coin.Descripcion} (${coin.ImageUrl})",
+            text = "(${coin.descripcion}) " ,
             style = MaterialTheme.typography.body1,
-            overflow = TextOverflow.Ellipsis
-        )
+            overflow = TextOverflow.Ellipsis,
+
+            )
+
+        Text(
+            text = "(${coin.valor}) " ,
+            style = MaterialTheme.typography.body1,
+            overflow = TextOverflow.Ellipsis,
+
+            )
+
+        Text(
+            text = "(${coin.imageUrl}) " ,
+            style = MaterialTheme.typography.body1,
+            overflow = TextOverflow.Ellipsis,
+
+            )
 
     }
 
@@ -95,25 +112,25 @@ fun CoinItem(
 
 //RUTA: data/remote/dto
 data class CoinDto(
-    val MonedaId: Int = 0,
-    val Descripcion: String = "",
-    val Valor: Double,
-    val ImageUrl: String = ""
+    val monedaId: Int = 0,
+    val descripcion: String = "",
+    val valor: Double = 0.0,
+    val imageUrl: String = ""
 )
 
 //RUTA: data/remote
 interface CoinApi {
-    @GET("/v1/coins")
+    @GET("/Coinst")
     suspend fun getCoins(): List<CoinDto>
 
-    @GET("/v1/coins/{coinId}")
-    suspend fun getCoin(@Path("coinId") coinId: String): CoinDto
+    /*@GET("/Coinst/{MonedaId}")
+    suspend fun getCoin(@Path("MonedaId") MonedaId: String): CoinDto*/
 }
 
 class CoinsRepository @Inject constructor(
     private val api: CoinApi
 ) {
-    fun getCoins(): Flow<Resource<List<CoinDto>>> = flow {
+    fun getCoin(): Flow<Resource<List<CoinDto>>> = flow {
         try {
             emit(Resource.Loading()) //indicar que estamos cargando
 
@@ -145,7 +162,7 @@ class CoinViewModel @Inject constructor(
     val state: State<CoinListState> = _state
 
     init {
-        coinsRepository.getCoins().onEach { result ->
+        coinsRepository.getCoin().onEach { result ->
             when (result) {
                 is Resource.Loading -> {
                     _state.value = CoinListState(isLoading = true)
