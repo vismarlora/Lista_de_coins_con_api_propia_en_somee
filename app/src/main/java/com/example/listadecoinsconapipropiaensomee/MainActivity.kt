@@ -7,16 +7,27 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.text.font.FontStyle
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import coil.compose.AsyncImage
+import coil.request.ImageRequest
 import com.example.listadecoinsconapipropiaensomee.ui.theme.ListaDeCoinsConApiPropiaEnSomeeTheme
 import com.example.listadecoinsconapipropiaensomee.util.Resource
 import dagger.hilt.android.AndroidEntryPoint
@@ -57,7 +68,9 @@ fun CoinListScreen(
 
     Scaffold(
         topBar = {
-            TopAppBar(title = { Text(text = "Consulta de problemas")})
+            TopAppBar(title = { Text(text = "Consulta de Criptomonedas    $",
+                fontFamily = FontFamily.Serif,
+                fontWeight = FontWeight.Bold)})
         }
     ) {
         Column(modifier = Modifier.padding(it).fillMaxWidth()) {
@@ -79,35 +92,35 @@ fun CoinItem(
     coin:CoinDto,
     onClick : (CoinDto) -> Unit
 ) {
-    Row(modifier = Modifier
-        .fillMaxWidth()
-        .clickable { onClick(coin) }
-        .padding(20.dp)
+    Card(
+        shape = RoundedCornerShape(8.dp),
+        elevation = 5.dp,
+        modifier = Modifier
+            .padding(horizontal = 8.dp, vertical = 2.dp).fillMaxWidth()
     ) {
+        Row(modifier = Modifier
+            .clickable { onClick(coin) }.padding(8.dp),
+            horizontalArrangement = Arrangement.SpaceBetween
+        ) {
+            Row{
+                AsyncImage(modifier = Modifier.size(55.dp),
+                    model = ImageRequest.Builder(LocalContext.current).data(coin.imageUrl)
+                        .crossfade(true).build(),
+                    contentDescription = coin.descripcion,
+                )
 
-        Text(
-            text = "(${coin.descripcion}) " ,
-            style = MaterialTheme.typography.body1,
-            overflow = TextOverflow.Ellipsis,
+                Spacer(modifier = Modifier.width(10.dp))
+                    Text(text = coin.descripcion, fontWeight = FontWeight.Bold)
+            }
 
+            Text(
+                text = coin.valor.toString(), color = Color.Blue,
+                fontWeight = FontWeight.Bold,
+                fontStyle = FontStyle.Italic,
+                textAlign = TextAlign.End
             )
-
-        Text(
-            text = "(${coin.valor}) " ,
-            style = MaterialTheme.typography.body1,
-            overflow = TextOverflow.Ellipsis,
-
-            )
-
-        Text(
-            text = "(${coin.imageUrl}) " ,
-            style = MaterialTheme.typography.body1,
-            overflow = TextOverflow.Ellipsis,
-
-            )
-
+        }
     }
-
 }
 
 //RUTA: data/remote/dto
