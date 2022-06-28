@@ -114,7 +114,7 @@ fun CoinItem(
             }
 
             Text(
-                text = coin.valor.toString(), color = Color.Blue,
+                text = coin.valor.toString(), color = Color.Blue, fontFamily = FontFamily.Serif,
                 fontWeight = FontWeight.Bold,
                 fontStyle = FontStyle.Italic,
                 textAlign = TextAlign.End
