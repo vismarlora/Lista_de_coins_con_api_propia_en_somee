@@ -40,6 +40,7 @@ import retrofit2.HttpException
 import retrofit2.http.GET
 import retrofit2.http.Path
 import java.io.IOException
+import java.text.DecimalFormat
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -113,8 +114,10 @@ fun CoinItem(
                     Text(text = coin.descripcion, fontWeight = FontWeight.Bold)
             }
 
+            val decimalFormat = DecimalFormat("#,###.######")
+
             Text(
-                text = coin.valor.toString(), color = Color.Blue, fontFamily = FontFamily.Serif,
+                text = "$" + decimalFormat.format(coin.valor.toDouble()), color = Color.Blue, fontFamily = FontFamily.Serif,
                 fontWeight = FontWeight.Bold,
                 fontStyle = FontStyle.Italic,
                 textAlign = TextAlign.End
@@ -127,7 +130,7 @@ fun CoinItem(
 data class CoinDto(
     val monedaId: Int = 0,
     val descripcion: String = "",
-    val valor: Double = 0.0,
+    val valor: String = "",
     val imageUrl: String = ""
 )
 
