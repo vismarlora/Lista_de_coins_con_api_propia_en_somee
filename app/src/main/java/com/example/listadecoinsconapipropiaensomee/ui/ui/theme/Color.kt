@@ -1,4 +1,4 @@
-package com.example.listadecoinsconapipropiaensomee.ui.theme
+package com.example.listadecoinsconapipropiaensomee.ui
 
 import androidx.compose.ui.graphics.Color
 

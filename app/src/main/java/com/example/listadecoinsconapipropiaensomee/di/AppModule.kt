@@ -1,7 +1,7 @@
 package com.example.listadecoinsconapipropiaensomee.di
 
-import com.example.listadecoinsconapipropiaensomee.CoinApi
-import com.example.listadecoinsconapipropiaensomee.CoinsRepository
+import com.example.listadecoinsconapipropiaensomee.data.CoinApi
+import com.example.listadecoinsconapipropiaensomee.data.CoinsRepository
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import dagger.Module

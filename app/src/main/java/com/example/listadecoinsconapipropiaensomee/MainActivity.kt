@@ -3,45 +3,12 @@ package com.example.listadecoinsconapipropiaensomee
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.State
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.text.font.FontFamily
-import androidx.compose.ui.text.font.FontStyle
-import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.text.style.TextOverflow
-import androidx.compose.ui.unit.dp
-import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
-import coil.compose.AsyncImage
-import coil.request.ImageRequest
-import com.example.listadecoinsconapipropiaensomee.ui.theme.ListaDeCoinsConApiPropiaEnSomeeTheme
-import com.example.listadecoinsconapipropiaensomee.util.Resource
+import com.example.listadecoinsconapipropiaensomee.ui.ListaDeCoinsConApiPropiaEnSomeeTheme
+import com.example.listadecoinsconapipropiaensomee.ui.ui.screens.CoinListScreen
 import dagger.hilt.android.AndroidEntryPoint
-import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.flow.launchIn
-import kotlinx.coroutines.flow.onEach
-import retrofit2.HttpException
-import retrofit2.http.GET
-import retrofit2.http.Path
-import java.io.IOException
-import java.text.DecimalFormat
-import javax.inject.Inject
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
@@ -61,7 +28,7 @@ class MainActivity : ComponentActivity() {
     }
 }
 
-@Composable
+/*@Composable
 fun CoinListScreen(
     viewModel: CoinViewModel = hiltViewModel()
 ) {
@@ -86,9 +53,9 @@ fun CoinListScreen(
 
         }
     }
-}
+}*/
 
-@Composable
+/*@Composable
 fun CoinItem(
     coin:CoinDto,
     onClick : (CoinDto) -> Unit
@@ -124,26 +91,30 @@ fun CoinItem(
             )
         }
     }
-}
+}*/
+
 
 //RUTA: data/remote/dto
-data class CoinDto(
+
+/*data class CoinDto(
     val monedaId: Int = 0,
     val descripcion: String = "",
     val valor: String = "",
     val imageUrl: String = ""
-)
+)*/
 
 //RUTA: data/remote
-interface CoinApi {
+
+/*interface CoinApi {
     @GET("/Coinst")
     suspend fun getCoins(): List<CoinDto>
 
-    /*@GET("/Coinst/{MonedaId}")
-    suspend fun getCoin(@Path("MonedaId") MonedaId: String): CoinDto*/
-}
+    *//*@GET("/Coinst/{MonedaId}")
+    suspend fun getCoin(@Path("MonedaId") MonedaId: String): CoinDto*//*
+}*/
 
-class CoinsRepository @Inject constructor(
+
+/*class CoinsRepository @Inject constructor(
     private val api: CoinApi
 ) {
     fun getCoin(): Flow<Resource<List<CoinDto>>> = flow {
@@ -161,15 +132,15 @@ class CoinsRepository @Inject constructor(
             emit(Resource.Error(e.message ?: "verificar tu conexion a internet"))
         }
     }
-}
+}*/
 
-data class CoinListState(
+/*data class CoinListState(
     val isLoading: Boolean = false,
     val coins: List<CoinDto> = emptyList(),
     val error: String = ""
-)
+)*/
 
-@HiltViewModel
+/*@HiltViewModel
 class CoinViewModel @Inject constructor(
     private val coinsRepository: CoinsRepository
 ) : ViewModel() {
@@ -193,4 +164,4 @@ class CoinViewModel @Inject constructor(
             }
         }.launchIn(viewModelScope)
     }
-}
+}*/
