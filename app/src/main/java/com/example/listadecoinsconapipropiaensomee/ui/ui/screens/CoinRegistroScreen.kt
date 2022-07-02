@@ -86,10 +86,7 @@ fun CoinRegistroScreen(
             )
 
             Spacer(modifier = Modifier.width(20.dp))
-            Button(onClick = {
-                viewModel.Guardar()
-                navHostController.navigate("CoinListScreen")
-            }) {
+            Button(onClick = { }) {
                 Icon(
                     imageVector = Icons.Default.Save,
                     contentDescription = null,
