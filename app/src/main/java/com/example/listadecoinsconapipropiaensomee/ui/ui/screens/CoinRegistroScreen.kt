@@ -11,6 +11,7 @@ import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -33,9 +34,24 @@ fun CoinRegistroScreen(
 
     Scaffold(
         topBar = {
-            TopAppBar(title = { Text(text = "Registro de Criptomonedas",
-                fontFamily = FontFamily.Serif,
-                fontWeight = FontWeight.Bold) })
+            TopAppBar(
+                title = {
+                    Text(
+                        text = "Registro  Criptomonedas",
+                        fontFamily = FontFamily.Serif,
+                        fontWeight = FontWeight.Bold
+                    )
+                },
+                navigationIcon = {
+                    IconButton(onClick = { navHostController.navigate("CoinListScreen") }) {
+                        Icon(
+                            imageVector = Icons.Default.ArrowBack,
+                            contentDescription = "CONSULTA",
+                            //modifier = Modifier.size(30.dp)
+                        )
+                    }
+                }
+            )
         },
         scaffoldState = scaffoldState
     ) {
@@ -47,7 +63,7 @@ fun CoinRegistroScreen(
 
             OutlinedTextField(
                 value = "",
-                label = { Text(text = "Moneda") },
+                label = { Text(text = "Moneda", fontStyle = FontStyle.Italic) },
                 onValueChange = { },
                 modifier = Modifier
                     .fillMaxWidth()
@@ -59,7 +75,7 @@ fun CoinRegistroScreen(
 
             OutlinedTextField(
                 value = "",
-                label = { Text(text = "Precio") },
+                label = { Text(text = "Precio", fontStyle = FontStyle.Italic) },
                 onValueChange = { },
                 modifier = Modifier
                     .fillMaxWidth()
@@ -79,7 +95,7 @@ fun CoinRegistroScreen(
                     contentDescription = null,
                     modifier = Modifier.size(ButtonDefaults.IconSize)
                 )
-                Text("GUARDAR")
+                Text("  GUARDAR")
             }
         }
     }

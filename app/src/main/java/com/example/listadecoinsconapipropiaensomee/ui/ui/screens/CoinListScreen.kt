@@ -29,13 +29,12 @@ fun CoinListScreen(
         topBar = {
             TopAppBar(
                 title = {
-                    Row{
-                        Text(text = "Consulta de Criptomonedas",
-                            fontFamily = FontFamily.Serif,
-                            fontWeight = FontWeight.Bold)
-                        }
-
-            },
+                    Text(
+                        text = "Consulta de Criptomonedas",
+                        fontFamily = FontFamily.Serif,
+                        fontWeight = FontWeight.Bold
+                    )
+                },
                 actions = {
                     IconButton(onClick = { navHostController.navigate("CoinRegistroScreen") }) {
                         Icon(
@@ -50,11 +49,13 @@ fun CoinListScreen(
         }
 
     ) {
-        Column(modifier = Modifier
-            .padding(it)
-            .fillMaxWidth()) {
-            LazyColumn(modifier = Modifier.fillMaxWidth()){
-                items(state.coins){ coin ->
+        Column(
+            modifier = Modifier
+                .padding(it)
+                .fillMaxWidth()
+        ) {
+            LazyColumn(modifier = Modifier.fillMaxWidth()) {
+                items(state.coins) { coin ->
                     CoinItem(coin = coin, {})
                 }
             }
