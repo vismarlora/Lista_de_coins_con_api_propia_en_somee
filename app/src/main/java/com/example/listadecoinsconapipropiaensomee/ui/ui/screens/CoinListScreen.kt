@@ -6,8 +6,11 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.AddCard
+import androidx.compose.material.icons.filled.AddCircle
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.modifier.modifierLocalConsumer
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -27,16 +30,23 @@ fun CoinListScreen(
             TopAppBar(
                 title = {
                     Row{
-                        Text(text = "Consulta Criptomonedas",
+                        Text(text = "Consulta de Criptomonedas",
                             fontFamily = FontFamily.Serif,
                             fontWeight = FontWeight.Bold)
-                        Spacer(modifier = Modifier.size(40.dp))
-                        FloatingActionButton(onClick = { navHostController.navigate("CoinRegistroScreen") }) {
-                                Icon(imageVector = Icons.Default.Add, contentDescription = null)
-                            }
                         }
 
-            })
+            },
+                actions = {
+                    IconButton(onClick = { navHostController.navigate("CoinRegistroScreen") }) {
+                        Icon(
+                            imageVector = Icons.Default.AddCircle,
+                            contentDescription = "AGREGAR",
+                            modifier = Modifier.size(30.dp)
+                        )
+
+                    }
+                }
+            )
         }
 
     ) {

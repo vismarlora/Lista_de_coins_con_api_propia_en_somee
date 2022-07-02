@@ -10,6 +10,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -31,7 +33,9 @@ fun CoinRegistroScreen(
 
     Scaffold(
         topBar = {
-            TopAppBar(title = { Text(text = "Registro de Criptomonedas") })
+            TopAppBar(title = { Text(text = "Registro de Criptomonedas",
+                fontFamily = FontFamily.Serif,
+                fontWeight = FontWeight.Bold) })
         },
         scaffoldState = scaffoldState
     ) {
@@ -77,7 +81,6 @@ fun CoinRegistroScreen(
                 )
                 Text("GUARDAR")
             }
-
         }
     }
 }
