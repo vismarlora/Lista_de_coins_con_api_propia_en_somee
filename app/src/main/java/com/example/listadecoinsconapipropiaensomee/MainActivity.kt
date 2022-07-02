@@ -5,8 +5,13 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
+import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
 import com.example.listadecoinsconapipropiaensomee.ui.ListaDeCoinsConApiPropiaEnSomeeTheme
+import com.example.listadecoinsconapipropiaensomee.ui.ui.screens.CoinRegistroScreen
 import com.example.listadecoinsconapipropiaensomee.ui.ui.screens.CoinListScreen
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -21,12 +26,47 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colors.background
                 ) {
-                    CoinListScreen()
+                    NavigationHost()
                 }
             }
         }
     }
 }
+
+@Composable
+fun NavigationHost() {
+    val navHostController = rememberNavController()
+
+    NavHost(
+        navController = navHostController,
+        startDestination = Screens.CoinListScreen.route
+    ) {
+        composable(Screens.CoinListScreen.route){
+            CoinListScreen(navHostController = navHostController)
+        }
+        composable(Screens.RegisterCoinScreen.route){
+            CoinRegistroScreen(navHostController = navHostController)
+        }
+    }
+}
+
+sealed class Screens (val route: String){
+    object CoinListScreen: Screens("CoinListScreen")
+    object RegisterCoinScreen: Screens("CoinRegistroScreen")
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 /*@Composable
 fun CoinListScreen(

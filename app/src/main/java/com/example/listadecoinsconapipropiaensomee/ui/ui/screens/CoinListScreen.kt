@@ -5,21 +5,21 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material.CircularProgressIndicator
-import androidx.compose.material.Scaffold
-import androidx.compose.material.Text
-import androidx.compose.material.TopAppBar
+import androidx.compose.material.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.example.listadecoinsconapipropiaensomee.ui.screens.CoinViewModel
+import androidx.navigation.NavHostController
 import com.example.listadecoinsconapipropiaensomee.ui.ui.screens.componentes.CoinItem
 
 @Composable
 fun CoinListScreen(
-    viewModel: CoinViewModel = hiltViewModel()
+    viewModel: CoinViewModel = hiltViewModel(),
+    navHostController: NavHostController,
 ) {
     val state = viewModel.state.value
 
@@ -29,7 +29,14 @@ fun CoinListScreen(
                 fontFamily = FontFamily.Serif,
                 fontWeight = FontWeight.Bold)
             })
+        },
+
+        floatingActionButton = {
+            FloatingActionButton(onClick = { navHostController.navigate("CoinRegistroScreen") }) {
+                Icon(imageVector = Icons.Default.Add, contentDescription = null)
+            }
         }
+
     ) {
         Column(modifier = Modifier.padding(it).fillMaxWidth()) {
             LazyColumn(modifier = Modifier.fillMaxWidth()){
@@ -40,7 +47,6 @@ fun CoinListScreen(
 
             if (state.isLoading)
                 CircularProgressIndicator()
-
         }
     }
 }

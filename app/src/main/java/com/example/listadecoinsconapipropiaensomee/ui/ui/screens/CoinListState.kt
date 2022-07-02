@@ -1,4 +1,4 @@
-package com.example.listadecoinsconapipropiaensomee.ui.screens
+package com.example.listadecoinsconapipropiaensomee.ui.ui.screens
 
 import com.example.listadecoinsconapipropiaensomee.data.dto.CoinDto
 

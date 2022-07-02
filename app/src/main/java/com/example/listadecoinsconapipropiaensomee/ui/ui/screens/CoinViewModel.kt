@@ -1,10 +1,11 @@
-package com.example.listadecoinsconapipropiaensomee.ui.screens
+package com.example.listadecoinsconapipropiaensomee.ui.ui.screens
 
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.listadecoinsconapipropiaensomee.data.CoinsRepository
+import com.example.listadecoinsconapipropiaensomee.ui.ui.screens.CoinListState
 import com.example.listadecoinsconapipropiaensomee.util.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.launchIn
