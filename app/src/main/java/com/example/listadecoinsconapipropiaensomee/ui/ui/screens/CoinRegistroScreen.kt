@@ -1,17 +1,17 @@
 package com.example.listadecoinsconapipropiaensomee.ui.ui.screens
 
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.*
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 
@@ -26,27 +26,25 @@ fun CoinRegistroScreen(
 
     var validar = LocalContext.current
     val focusRequester = FocusRequester()
-    //val focusRequesterMonto = FocusRequester()
+    //val focusRequesterMoneda = FocusRequester()
     //val focusRequesterPrecio = FocusRequester()
 
     Scaffold(
         topBar = {
             TopAppBar(title = { Text(text = "Registro de Criptomonedas") })
         },
-        floatingActionButton = {
-            Icon(imageVector = Icons.Default.Save, contentDescription = null)
-        },
         scaffoldState = scaffoldState
     ) {
         Column(
             Modifier
                 .padding(it)
-                .padding(16.dp)) {
+                .padding(16.dp)
+        ) {
 
             OutlinedTextField(
                 value = "",
                 label = { Text(text = "Moneda") },
-                onValueChange = {  },
+                onValueChange = { },
                 modifier = Modifier
                     .fillMaxWidth()
                     .focusRequester(focusRequester),
@@ -58,7 +56,7 @@ fun CoinRegistroScreen(
             OutlinedTextField(
                 value = "",
                 label = { Text(text = "Precio") },
-                onValueChange = {  },
+                onValueChange = { },
                 modifier = Modifier
                     .fillMaxWidth()
                     .focusRequester(focusRequester),
@@ -66,6 +64,20 @@ fun CoinRegistroScreen(
                     Icon(imageVector = Icons.Default.PriceCheck, contentDescription = null)
                 }
             )
+
+            Spacer(modifier = Modifier.width(20.dp))
+            Button(onClick = {
+                viewModel.Guardar()
+                navHostController.navigate("CoinListScreen")
+            }) {
+                Icon(
+                    imageVector = Icons.Default.Save,
+                    contentDescription = null,
+                    modifier = Modifier.size(ButtonDefaults.IconSize)
+                )
+                Text("GUARDAR")
+            }
+
         }
     }
 }
