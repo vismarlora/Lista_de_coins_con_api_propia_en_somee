@@ -1,6 +1,7 @@
 package com.example.listadecoinsconapipropiaensomee.ui.ui.screens
 
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.*
@@ -13,6 +14,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -82,7 +84,20 @@ fun CoinRegistroScreen(
                     .focusRequester(focusRequester),
                 leadingIcon = {
                     Icon(imageVector = Icons.Default.PriceCheck, contentDescription = null)
-                }
+                },
+                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
+            )
+
+            OutlinedTextField(
+                value = "",
+                label = { Text(text = "Url Image", fontStyle = FontStyle.Italic) },
+                onValueChange = { },
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .focusRequester(focusRequester),
+                leadingIcon = {
+                    Icon(imageVector = Icons.Default.Image, contentDescription = null)
+                },
             )
 
             Spacer(modifier = Modifier.width(20.dp))
