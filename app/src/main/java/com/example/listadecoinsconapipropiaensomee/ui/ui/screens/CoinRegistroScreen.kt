@@ -205,7 +205,9 @@ fun CoinRegistroScreen(
 
 
                     viewModel.Guardar()
+
                     viewModel.recargarLista()
+
                     navHostController.navigate("CoinListScreen")
                     Toast.makeText(
                         validar,
