@@ -135,9 +135,6 @@ fun CoinRegistroScreen(
                         contentDescription = null
                     )
                 },
-                keyboardOptions = KeyboardOptions(
-                    keyboardType = KeyboardType.Number
-                )
             )
 
             val assistiveText = if (error)
