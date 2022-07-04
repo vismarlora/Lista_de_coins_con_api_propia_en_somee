@@ -26,4 +26,8 @@ class CoinsRepository @Inject constructor(
             emit(Resource.Error(e.message ?: "verificar tu conexion a internet"))
         }
     }
+
+    suspend fun Inser(coinDto: CoinDto){
+        api.PostInser(coinDto)
+    }
 }
