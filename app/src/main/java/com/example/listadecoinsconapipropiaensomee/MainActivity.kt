@@ -41,19 +41,26 @@ fun NavigationHost() {
         navController = navHostController,
         startDestination = Screens.CoinListScreen.route
     ) {
-        composable(Screens.CoinListScreen.route){
+        composable(Screens.CoinListScreen.route) {
             CoinListScreen(navHostController = navHostController)
         }
-        composable(Screens.RegisterCoinScreen.route){
+        composable(Screens.RegisterCoinScreen.route) {
             CoinRegistroScreen(navHostController = navHostController)
         }
     }
 }
 
-sealed class Screens (val route: String){
-    object CoinListScreen: Screens("CoinListScreen")
-    object RegisterCoinScreen: Screens("CoinRegistroScreen")
+sealed class Screens(val route: String) {
+    object CoinListScreen : Screens("CoinListScreen")
+    object RegisterCoinScreen : Screens("CoinRegistroScreen")
 }
+
+
+
+
+
+
+
 
 
 
