@@ -36,7 +36,9 @@ fun CoinListScreen(
                     )
                 },
                 actions = {
-                    IconButton(onClick = { navHostController.navigate("CoinRegistroScreen") }) {
+                    IconButton(onClick = { navHostController.navigate("CoinRegistroScreen")
+
+                    }) {
                         Icon(
                             imageVector = Icons.Default.AddCircle,
                             contentDescription = "AGREGAR",
