@@ -1,10 +1,13 @@
 package com.example.listadecoinsconapipropiaensomee.ui.ui.screens
 
 import androidx.compose.runtime.State
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.listadecoinsconapipropiaensomee.data.CoinsRepository
+import com.example.listadecoinsconapipropiaensomee.data.dto.CoinDto
 import com.example.listadecoinsconapipropiaensomee.ui.ui.screens.CoinListState
 import com.example.listadecoinsconapipropiaensomee.util.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -17,6 +20,10 @@ import javax.inject.Inject
 class CoinViewModel @Inject constructor(
     private val coinsRepository: CoinsRepository
 ) : ViewModel() {
+
+    var descripcion by mutableStateOf("")
+    var imageUrl by mutableStateOf("")
+    var valor by mutableStateOf(0.00)
 
     private var _state = mutableStateOf(CoinListState())
     val state: State<CoinListState> = _state
@@ -38,9 +45,24 @@ class CoinViewModel @Inject constructor(
         }.launchIn(viewModelScope)
     }
 
+    fun recargarLista(){
+        viewModelScope.launch {
+            coinsRepository.getCoin().collect {
+                _state.value = CoinListState(coins = it.data ?: emptyList())
+            }
+        }
+
+    }
+
     fun Guardar(){
         viewModelScope.launch {
-
+            coinsRepository.Inser(
+                CoinDto(
+                    descripcion = descripcion,
+                    imageUrl = imageUrl,
+                    valor = valor
+                )
+            )
         }
     }
 }
