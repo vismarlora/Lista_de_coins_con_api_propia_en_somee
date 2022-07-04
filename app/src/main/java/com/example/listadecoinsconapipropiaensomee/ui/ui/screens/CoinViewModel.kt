@@ -29,6 +29,10 @@ class CoinViewModel @Inject constructor(
     val state: State<CoinListState> = _state
 
     init {
+        recargarLista()
+    }
+
+    fun recargarLista(){
         coinsRepository.getCoin().onEach { result ->
             when (result) {
                 is Resource.Loading -> {
@@ -43,14 +47,13 @@ class CoinViewModel @Inject constructor(
                 }
             }
         }.launchIn(viewModelScope)
-    }
 
-    fun recargarLista(){
-        viewModelScope.launch {
+
+        /*viewModelScope.launch {
             coinsRepository.getCoin().collect {
                 _state.value = CoinListState(coins = it.data ?: emptyList())
             }
-        }
+        }*/
 
     }
 
