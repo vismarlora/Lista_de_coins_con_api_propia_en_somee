@@ -2,6 +2,7 @@ package com.example.listadecoinsconapipropiaensomee.ui.ui.screens
 
 import android.widget.Toast
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.CutCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
@@ -114,7 +115,7 @@ fun CoinRegistroScreen(
             )
 
             OutlinedTextField(
-                value = viewModel.valor.toString(),
+                value = viewModel.valor,
                 label = {
                     Text(
                         text = "Precio",
@@ -122,7 +123,7 @@ fun CoinRegistroScreen(
                     )
                 },
                 onValueChange = {
-                    viewModel.valor = it.toDouble()
+                    viewModel.valor = it
                     error = false
                 },
                 isError = error,
@@ -135,6 +136,7 @@ fun CoinRegistroScreen(
                         contentDescription = null
                     )
                 },
+                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
             )
 
             val assistiveText = if (error)
@@ -181,44 +183,56 @@ fun CoinRegistroScreen(
             )
             Button(
                 onClick = {
-                    if (viewModel.descripcion.isNullOrEmpty()) {
+                    if (!viewModel.descripcion.isNullOrEmpty() || !viewModel.valor.isNullOrEmpty()) {
+                        if (validar(viewModel.valor) == false) {
+                            error = viewModel.valor.isBlank()
+                            Toast.makeText(
+                                validar,
+                                "El Precio que ingreso no es valido!",
+                                Toast.LENGTH_LONG
+                            ).show()
+                            focusRequesterPrecio.requestFocus()
+                        } else {
+                            if (viewModel.valor.toDouble() <= 0) {
+                                error = viewModel.valor.isBlank()
+                                Toast.makeText(
+                                    validar,
+                                    "El Precio debe ser mayor que cero!",
+                                    Toast.LENGTH_LONG
+                                ).show()
+                                focusRequesterPrecio.requestFocus()
+
+                            } else {
+                                viewModel.Guardar()
+                                navHostController.navigate("CoinListScreen")
+                                Toast.makeText(
+                                    validar,
+                                    "Se ha Guardado Correctamente!",
+                                    Toast.LENGTH_LONG
+                                ).show()
+                                viewModel.descripcion = ""
+                                viewModel.imageUrl = ""
+                                viewModel.valor = ""
+
+                            }
+                        }
+
+                    } else {
                         error = viewModel.descripcion.isBlank()
                         Toast.makeText(
                             validar,
-                            "El campo Moneda está vacio!",
+                            "Los Campos correspondientes están vacío!",
                             Toast.LENGTH_LONG
                         ).show()
                         focusRequesterDescripcion.requestFocus()
-                        return@Button
                     }
 
-                    if (viewModel.valor <= 0) {
-                        error = viewModel.valor.toString().isBlank()
-                        Toast.makeText(
-                            validar,
-                            "El Precio debe ser mayor que cero!",
-                            Toast.LENGTH_LONG
-                        ).show()
-                        focusRequesterPrecio.requestFocus()
-                        return@Button
-                    }
-
-
-                    viewModel.Guardar()
-
-                    viewModel.recargarLista()
-
-                    navHostController.navigate("CoinListScreen")
-                    Toast.makeText(
-                        validar,
-                        "Se ha Guardado Correctamente!",
-                        Toast.LENGTH_LONG
-                    ).show()
-                    viewModel.descripcion = ""
-                    viewModel.imageUrl = ""
-                    viewModel.valor = 0.0
                     //focusRequester.requestFocus()
-                }
+                },
+                modifier = Modifier.padding(16.dp)
+                    .align(Alignment.CenterHorizontally)
+                    .fillMaxWidth(),
+                shape = CutCornerShape(10.dp)
             ) {
                 Icon(
                     imageVector = Icons.Default.Save,
@@ -228,5 +242,16 @@ fun CoinRegistroScreen(
                 Text("  GUARDAR")
             }
         }
+    }
+}
+
+fun validar(precio: String): Boolean {
+
+    try {
+        precio.toDouble()
+        return true
+
+    } catch (nfe: NumberFormatException) {
+        return false
     }
 }

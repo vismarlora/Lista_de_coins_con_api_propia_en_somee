@@ -48,7 +48,7 @@ fun CoinItem(
             val decimal = DecimalFormat("#,###.######")
 
             Text(
-                text = "$" + decimal.format(coin.valor.toDouble()), color = Color.Blue, fontFamily = FontFamily.Serif,
+                text = "$" + decimal.format(coin.valor?.toDouble()), color = Color.Blue, fontFamily = FontFamily.Serif,
                 fontWeight = FontWeight.Bold,
                 fontStyle = FontStyle.Italic,
                 textAlign = TextAlign.End

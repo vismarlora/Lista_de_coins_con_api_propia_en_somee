@@ -6,6 +6,6 @@ import com.squareup.moshi.JsonClass
 data class CoinDto(
     val monedaId: Int = 0,
     val descripcion: String = "",
-    val valor: Double = 0.0,
+    val valor: String = "",
     val imageUrl: String = ""
 )

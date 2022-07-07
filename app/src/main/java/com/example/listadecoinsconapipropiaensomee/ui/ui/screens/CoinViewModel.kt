@@ -23,7 +23,7 @@ class CoinViewModel @Inject constructor(
 
     var descripcion by mutableStateOf("")
     var imageUrl by mutableStateOf("")
-    var valor by mutableStateOf(0.00)
+    var valor by mutableStateOf("")
 
     private var _state = mutableStateOf(CoinListState())
     val state: State<CoinListState> = _state
